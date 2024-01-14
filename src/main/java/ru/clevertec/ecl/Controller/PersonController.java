@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.clevertec.ecl.dto.requestDTO.RequestPersonDTO;
 import ru.clevertec.ecl.dto.responseDTO.ResponsePersonDTO;
@@ -22,8 +23,9 @@ public class PersonController {
     private PersonService services;
 
     @GetMapping
-    public List<ResponsePersonDTO> getAllHouse() {
-        return services.findByAll();
+    public List<ResponsePersonDTO> getAllHouse(@RequestParam(defaultValue = "1") int pageNumber,
+                                               @RequestParam(defaultValue = "5") int pageSize) {
+        return services.findByAll(pageNumber, pageSize);
     }
 
     @GetMapping("/{uuid}")

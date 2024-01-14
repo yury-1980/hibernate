@@ -20,8 +20,8 @@ public class PersonServiceImpl implements PersonService {
     private PersonMapper mapper;
 
     @Override
-    public List<ResponsePersonDTO> findByAll() {
-        return repository.findByAll().stream()
+    public List<ResponsePersonDTO> findByAll(int pageNumber, int pageSize) {
+        return repository.findByAll(pageNumber, pageSize).stream()
                 .map(person -> mapper.toResponsePersonDto((Person) person))
                 .toList();
     }

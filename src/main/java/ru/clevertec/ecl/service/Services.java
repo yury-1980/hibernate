@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface Services<T, U> {
 
-    List<U> findByAll();
+    List<U> findByAll(int pageNumber, int pageSize);
 
     U findByUUID(UUID uuid) throws Throwable;
 

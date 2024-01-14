@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface Repository<T> {
 
-    List<T> findByAll();
+    List<T> findByAll(int pageNumber, int pageSize);
 
     Optional<T> findByUUID(UUID uuid);
 

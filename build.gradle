@@ -57,6 +57,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-parameters"
+}
+
 test {
     useJUnitPlatform()
 }

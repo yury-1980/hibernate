@@ -20,8 +20,8 @@ public class HouseServiceimpl implements HouseService {
     private HouseMapper mapper;
 
     @Override
-    public List<ResponseHouseDTO> findByAll() {
-        return repository.findByAll().stream()
+    public List<ResponseHouseDTO> findByAll(int pageNumber, int pageSize) {
+        return repository.findByAll(pageNumber, pageSize).stream()
                 .map(house -> mapper.toResponseHouseDTO((House) house))
                 .toList();
     }

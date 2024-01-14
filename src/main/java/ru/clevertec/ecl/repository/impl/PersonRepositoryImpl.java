@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.clevertec.ecl.entity.House;
 import ru.clevertec.ecl.entity.Person;
 import ru.clevertec.ecl.repository.PersonRepository;
 
@@ -21,10 +22,16 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Person> findByAll() {
+    public List<Person> findByAll(int pageNumber, int pageSize) {
         Session session = sessionFactory.getCurrentSession();
-
-        return session.createQuery("select p from Person p", Person.class).getResultList();
+        Query<Person> query = session.createQuery("SELECT p FROM Person p LEFT JOIN FETCH p.houseList", Person.class);
+        query.setFirstResult((pageNumber - 1) * pageSize);
+        query.setMaxResults(pageSize);
+        List<Person> persons = query.getResultList();
+        persons.forEach(person -> person.setHouse(session.createQuery("SELECT h FROM House h LEFT JOIN FETCH h.residentsList r WHERE r.uuid = :personUUID", House.class)
+                .setParameter("personUUID", person.getUuid())
+                .uniqueResult()));
+        return persons;
     }
 
     @Override
