@@ -59,6 +59,8 @@ public class HouseRepositoryImpl implements HouseRepository {
     @Override
     @Transactional
     public void update(House house) {
+        Session session = sessionFactory.getCurrentSession();
+        House merge = session.merge(house);
 
     }
 

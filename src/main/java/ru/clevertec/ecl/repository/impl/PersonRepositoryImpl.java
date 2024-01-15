@@ -56,7 +56,8 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     @Transactional
     public void update(Person person) {
-
+        Session session = sessionFactory.getCurrentSession();
+        Person merge = session.merge(person);
     }
 
     @Override

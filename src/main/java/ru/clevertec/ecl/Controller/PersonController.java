@@ -43,8 +43,8 @@ public class PersonController {
     }
 
     @PutMapping("/{uuid}")
-    public void update(@RequestBody RequestPersonDTO requestPersonDTO) {
-        services.update(requestPersonDTO);
+    public void update(@RequestBody RequestPersonDTO requestPersonDTO, @PathVariable("uuid") UUID uuid) {
+        services.update(requestPersonDTO, uuid);
     }
 
     @DeleteMapping("/{uuid}")

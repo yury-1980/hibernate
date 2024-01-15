@@ -43,8 +43,8 @@ public class HouseController {
     }
 
     @PutMapping("/{uuid}")
-    public void update(@RequestBody RequestHouseDTO requestHouseDTO) {
-
+    public void update(@RequestBody RequestHouseDTO requestHouseDTO, @PathVariable("uuid") UUID uuid) {
+        services.update(requestHouseDTO, uuid);
     }
 
     @DeleteMapping("/{uuid}")

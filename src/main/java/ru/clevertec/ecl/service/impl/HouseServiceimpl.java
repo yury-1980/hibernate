@@ -10,6 +10,7 @@ import ru.clevertec.ecl.repository.Repository;
 import ru.clevertec.ecl.service.HouseService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,8 +42,27 @@ public class HouseServiceimpl implements HouseService {
     }
 
     @Override
-    public void update(RequestHouseDTO requestHouseDTO) {
+    public void update(RequestHouseDTO requestHouseDTO, UUID uuid) {
+        Optional<House> byUUID = repository.findByUUID(uuid);
 
+        try {
+
+            if (byUUID.isPresent()) {
+                House house = byUUID.get();
+                house.setArea(requestHouseDTO.getArea());
+                house.setCountry(requestHouseDTO.getCountry());
+                house.setCity(requestHouseDTO.getCity());
+                house.setStreet(requestHouseDTO.getStreet());
+                house.setNumber(requestHouseDTO.getNumber());
+
+                repository.update(house);
+
+            } else {
+                throw new Exception("Object Empty!");
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override

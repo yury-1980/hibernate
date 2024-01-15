@@ -100,6 +100,24 @@
 
 http://localhost:8080/houses/633677d4-31a4-4728-b298-bfd8bbae8446 
 
+6. updateHouse
+
+Запрос: http://localhost:8080/houses/99efee95-2f1c-459e-b97c-509f7399aa01
+
+{
+"uuid": "99efee95-2f1c-459e-b97c-509f7399aa01",
+"area": "Gomelskay area",
+"country": "Some country",
+"city": "Gomel city",
+"street": "Some street",
+"number": 10,
+"createDate": "2024-01-12 23:29:04.595"
+}
+
+Ответ:
+
+Не возвращал. Но обновление происходит с оставлением старого ID, но перемещается в конец таблицы.
+
 ### Person
 
 1. getAllPerson
@@ -186,3 +204,22 @@ http://localhost:8080/houses/633677d4-31a4-4728-b298-bfd8bbae8446
 4. deletePerson
 
 Запрос: http://localhost:8080/houses/633677d4-31a4-4728-b298-bfd8bbae8446
+
+5. updatePerson
+
+Запрос:
+http://localhost:8080/persons/d8b6eda1-2ac7-4190-8523-389b3cccffa9
+
+{
+"uuid": "d8b6eda1-2ac7-4190-8523-389b3cccffa9",
+"name": "Masha",
+"surname": "Petrova",
+"sex": "Male",
+"passportSeries": "AA",
+"passportNumber": 3,
+"createDate": "2024-01-12 23:29:04.595",
+"updateDate": "2024-01-12 23:29:04.595"
+}
+
+Ответ: 
+Не возвращал. Но обновление происходит с оставлением старого ID, но перемещается в конец таблицы.

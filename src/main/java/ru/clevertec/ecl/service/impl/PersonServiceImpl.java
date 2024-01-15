@@ -9,7 +9,9 @@ import ru.clevertec.ecl.mapper.PersonMapper;
 import ru.clevertec.ecl.repository.Repository;
 import ru.clevertec.ecl.service.PersonService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,8 +43,27 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void update(RequestPersonDTO person) {
+    public void update(RequestPersonDTO requestPersonDTO, UUID uuid) {
+        Optional<Person> byUUID = repository.findByUUID(uuid);
 
+        try {
+
+            if (byUUID.isPresent()) {
+                Person person = byUUID.get();
+                person.setName(requestPersonDTO.getName());
+                person.setSurname(requestPersonDTO.getSurname());
+                person.setSex(requestPersonDTO.getSex());
+                person.setPassportSeries(requestPersonDTO.getPassportSeries());
+                person.setPassportNumber(requestPersonDTO.getPassportNumber());
+                person.setUpdateDate(LocalDateTime.now());
+
+                repository.update(person);
+            } else {
+                throw new Exception("Object Empty!");
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
