@@ -39,8 +39,8 @@ public class HouseRepositoryImpl implements HouseRepository {
     public Optional<House> findByUUID(UUID uuid) {
 
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("SELECT h FROM House h WHERE h.uuid = :uuid");
-        query.setParameter("uuid", uuid);
+        Query<House> query = session.createQuery("SELECT h FROM House h WHERE h.uuid = :uuid", House.class)
+                .setParameter("uuid", uuid);
         House house = (House) query.uniqueResult();
 
         return Optional.ofNullable(house);
@@ -58,13 +58,15 @@ public class HouseRepositoryImpl implements HouseRepository {
 
     @Override
     @Transactional
-    public void update(House t) {
+    public void update(House house) {
 
     }
 
     @Override
     @Transactional
     public void delete(UUID uuid) {
-
+        Session session = sessionFactory.getCurrentSession();
+        Query<House> query = session.createNativeQuery("DELETE FROM House h WHERE h.uuid = :uuid", House.class);
+        query.setParameter("uuid", uuid);
     }
 }

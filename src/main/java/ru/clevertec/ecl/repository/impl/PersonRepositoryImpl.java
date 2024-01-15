@@ -62,6 +62,8 @@ public class PersonRepositoryImpl implements PersonRepository {
     @Override
     @Transactional
     public void delete(UUID uuid) {
-
+        Session session = sessionFactory.getCurrentSession();
+        Query<Person> query = session.createNativeQuery("DELETE FROM person p WHERE p.uuid = :uuid", Person.class);
+        query.setParameter("uuid", uuid);
     }
 }

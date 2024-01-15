@@ -47,6 +47,6 @@ public class HouseServiceimpl implements HouseService {
 
     @Override
     public void delete(UUID uuid) {
-
+        repository.delete(uuid);
     }
 }
