@@ -33,11 +33,4 @@ public class ResponsePersonDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstFormatDate.FORMAT)
     private LocalDateTime updateDate;
-
-    // TODO: 18-01-2024: Проверить нужно ли.
-  /*  //    @Builder.Default
-    private List<House> houseList;// = new ArrayList<>();
-
-    //    @Builder.Default
-    private House house;// = new House();*/
 }

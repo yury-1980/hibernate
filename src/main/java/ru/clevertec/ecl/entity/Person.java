@@ -72,13 +72,13 @@ public class Person {
     // TODO: 11-01-2024: домов во владении
     @Builder.Default
     @ToString.Exclude
-    @ManyToMany(mappedBy = "ownersList", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "ownersList", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<House> houseList = new ArrayList<>();
 
     // TODO: 11-01-2024: место жительства.
     @Builder.Default
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house = new House();
 }

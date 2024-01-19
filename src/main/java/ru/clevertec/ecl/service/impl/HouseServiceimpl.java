@@ -10,8 +10,8 @@ import ru.clevertec.ecl.mapper.HouseMapper;
 import ru.clevertec.ecl.repository.Repository;
 import ru.clevertec.ecl.service.HouseService;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,6 +40,8 @@ public class HouseServiceimpl implements HouseService {
     @Transactional
     public UUID create(RequestHouseDTO requestHouseDTO) {
         House house = mapper.toHouse(requestHouseDTO);
+        house.setUuid(UUID.randomUUID());
+        house.setCreateDate(LocalDateTime.now());
 
         return repository.create(house);
     }
@@ -47,26 +49,15 @@ public class HouseServiceimpl implements HouseService {
     @Override
     @Transactional
     public void update(RequestHouseDTO requestHouseDTO, UUID uuid) {
-        Optional<House> byUUID = repository.findByUUID(uuid);
+        repository.findByUUID(uuid).ifPresent(house -> {
+            house.setArea(requestHouseDTO.getArea());
+            house.setCountry(requestHouseDTO.getCountry());
+            house.setCity(requestHouseDTO.getCity());
+            house.setStreet(requestHouseDTO.getStreet());
+            house.setNumber(requestHouseDTO.getNumber());
 
-        try {
-
-            if (byUUID.isPresent()) {
-                House house = byUUID.get();
-                house.setArea(requestHouseDTO.getArea());
-                house.setCountry(requestHouseDTO.getCountry());
-                house.setCity(requestHouseDTO.getCity());
-                house.setStreet(requestHouseDTO.getStreet());
-                house.setNumber(requestHouseDTO.getNumber());
-
-                repository.update(house);
-
-            } else {
-                throw new Exception("Object Empty!");
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+            repository.update(house);
+        });
     }
 
     @Override

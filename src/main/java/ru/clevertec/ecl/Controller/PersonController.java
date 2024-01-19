@@ -37,7 +37,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public UUID addHouse(@RequestBody RequestPersonDTO requestPersonDTO) {
+    public UUID addPerson(@RequestBody RequestPersonDTO requestPersonDTO) {
 
         return services.create(requestPersonDTO);
     }

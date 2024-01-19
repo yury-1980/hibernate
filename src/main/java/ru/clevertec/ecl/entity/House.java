@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -64,7 +65,7 @@ public class House {
     // TODO: 11-01-2024: лист владельцев
     @Builder.Default
     @ToString.Exclude
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "person_house",
             joinColumns = @JoinColumn(name = "house_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
@@ -73,6 +74,6 @@ public class House {
     // TODO: 11-01-2024: лист проживающих
     @ToString.Exclude
     @Builder.Default
-    @OneToMany(mappedBy = "house", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "house", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private List<Person> residentsList = new ArrayList<>();
 }
