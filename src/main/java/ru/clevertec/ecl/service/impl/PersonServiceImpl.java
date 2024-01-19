@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.requestDTO.RequestPersonDTO;
 import ru.clevertec.ecl.dto.responseDTO.ResponsePersonDTO;
 import ru.clevertec.ecl.entity.Person;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class PersonServiceImpl implements PersonService {
 
     private Repository<Person> repository;
@@ -36,6 +38,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public UUID create(RequestPersonDTO requestPersonDTO) {
         Person person = mapper.toPerson(requestPersonDTO);
 
@@ -43,6 +46,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public void update(RequestPersonDTO requestPersonDTO, UUID uuid) {
         Optional<Person> byUUID = repository.findByUUID(uuid);
 
@@ -67,6 +71,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public void delete(UUID uuid) {
         repository.delete(uuid);
     }

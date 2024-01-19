@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.clevertec.ecl.util.ConstFormatDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,8 +49,9 @@ public class Person {
     @Column(name = "surname")
     private String surname;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "sex")
-    private String sex;
+    private Sex sex;
 
     @Column(name = "passport_series")
     private String passportSeries;
@@ -55,12 +59,12 @@ public class Person {
     @Column(name = "passport_number")
     private Long passportNumber;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstFormatDate.FORMAT)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstFormatDate.FORMAT)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "update_date")
     private LocalDateTime updateDate;
@@ -68,13 +72,13 @@ public class Person {
     // TODO: 11-01-2024: домов во владении
     @Builder.Default
     @ToString.Exclude
-    @ManyToMany(mappedBy = "ownerList", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "ownersList", cascade = CascadeType.PERSIST)
     private List<House> houseList = new ArrayList<>();
 
     // TODO: 11-01-2024: место жительства.
     @Builder.Default
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house = new House();
 }

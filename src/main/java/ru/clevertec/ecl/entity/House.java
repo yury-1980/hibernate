@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.clevertec.ecl.util.ConstFormatDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class House {
     @Column(name = "number")
     private Long number;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstFormatDate.FORMAT)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -67,7 +68,7 @@ public class House {
     @JoinTable(name = "person_house",
             joinColumns = @JoinColumn(name = "house_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private List<Person> ownerList = new ArrayList<>();
+    private List<Person> ownersList = new ArrayList<>();
 
     // TODO: 11-01-2024: лист проживающих
     @ToString.Exclude

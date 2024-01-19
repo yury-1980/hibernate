@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.entity.House;
 import ru.clevertec.ecl.entity.Person;
 import ru.clevertec.ecl.repository.PersonRepository;
@@ -21,7 +20,6 @@ public class PersonRepositoryImpl implements PersonRepository {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Person> findByAll(int pageNumber, int pageSize) {
         Session session = sessionFactory.getCurrentSession();
         Query<Person> query = session.createQuery("SELECT p FROM Person p LEFT JOIN FETCH p.houseList", Person.class);
@@ -35,7 +33,6 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Person> findByUUID(UUID uuid) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("SELECT p FROM Person p WHERE p.uuid = :uuid");
@@ -46,7 +43,6 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     @Override
-    @Transactional
     public UUID create(Person person) {
         sessionFactory.getCurrentSession()
                 .persist(person);
@@ -54,14 +50,12 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     @Override
-    @Transactional
     public void update(Person person) {
         Session session = sessionFactory.getCurrentSession();
-        Person merge = session.merge(person);
+        session.merge(person);
     }
 
     @Override
-    @Transactional
     public void delete(UUID uuid) {
         Session session = sessionFactory.getCurrentSession();
         Query<Person> query = session.createNativeQuery("DELETE FROM person p WHERE p.uuid = :uuid", Person.class);

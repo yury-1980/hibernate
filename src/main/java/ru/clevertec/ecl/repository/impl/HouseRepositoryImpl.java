@@ -21,10 +21,9 @@ public class HouseRepositoryImpl implements HouseRepository {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional(readOnly = true)
     public List<House> findByAll(int pageNumber, int pageSize) {
         Session session = sessionFactory.getCurrentSession();
-        Query<House> query = session.createQuery("SELECT h FROM House h LEFT JOIN FETCH h.ownerList", House.class);
+        Query<House> query = session.createQuery("SELECT h FROM House h LEFT JOIN FETCH h.ownersList", House.class);
         query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
         List<House> houses = query.getResultList();
@@ -35,7 +34,6 @@ public class HouseRepositoryImpl implements HouseRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<House> findByUUID(UUID uuid) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -47,7 +45,6 @@ public class HouseRepositoryImpl implements HouseRepository {
     }
 
     @Override
-    @Transactional
     public UUID create(House house) {
 
         sessionFactory.getCurrentSession()
@@ -57,15 +54,12 @@ public class HouseRepositoryImpl implements HouseRepository {
     }
 
     @Override
-    @Transactional
     public void update(House house) {
         Session session = sessionFactory.getCurrentSession();
-        House merge = session.merge(house);
-
+        session.merge(house);
     }
 
     @Override
-    @Transactional
     public void delete(UUID uuid) {
         Session session = sessionFactory.getCurrentSession();
         Query<House> query = session.createNativeQuery("DELETE FROM House h WHERE h.uuid = :uuid", House.class);

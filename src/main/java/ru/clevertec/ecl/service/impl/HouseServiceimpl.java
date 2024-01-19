@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.requestDTO.RequestHouseDTO;
 import ru.clevertec.ecl.dto.responseDTO.ResponseHouseDTO;
 import ru.clevertec.ecl.entity.House;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class HouseServiceimpl implements HouseService {
 
     private Repository<House> repository;
@@ -35,6 +37,7 @@ public class HouseServiceimpl implements HouseService {
     }
 
     @Override
+    @Transactional
     public UUID create(RequestHouseDTO requestHouseDTO) {
         House house = mapper.toHouse(requestHouseDTO);
 
@@ -42,6 +45,7 @@ public class HouseServiceimpl implements HouseService {
     }
 
     @Override
+    @Transactional
     public void update(RequestHouseDTO requestHouseDTO, UUID uuid) {
         Optional<House> byUUID = repository.findByUUID(uuid);
 
@@ -66,6 +70,7 @@ public class HouseServiceimpl implements HouseService {
     }
 
     @Override
+    @Transactional
     public void delete(UUID uuid) {
         repository.delete(uuid);
     }

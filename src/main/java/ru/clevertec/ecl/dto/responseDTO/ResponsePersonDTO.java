@@ -1,29 +1,40 @@
 package ru.clevertec.ecl.dto.responseDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import ru.clevertec.ecl.entity.Sex;
+import ru.clevertec.ecl.util.ConstFormatDate;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResponsePersonDTO {
 
     private UUID uuid;
     private String name;
     private String surname;
-    private String sex;
+
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
     private String passportSeries;
     private Long passportNumber;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstFormatDate.FORMAT)
     private LocalDateTime createDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ConstFormatDate.FORMAT)
     private LocalDateTime updateDate;
 
+    // TODO: 18-01-2024: Проверить нужно ли.
   /*  //    @Builder.Default
     private List<House> houseList;// = new ArrayList<>();
 

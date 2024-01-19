@@ -16,7 +16,7 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("ru.clevertec")
+@ComponentScan("ru.clevertec.ecl")
 @PropertySource("classpath:application.yml")
 public class SpringConfig implements WebMvcConfigurer {
 
