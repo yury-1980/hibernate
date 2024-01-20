@@ -26,9 +26,10 @@ public class PersonRepositoryImpl implements PersonRepository {
         query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
         List<Person> persons = query.getResultList();
-        persons.forEach(person -> person.setHouse(session.createQuery("SELECT h FROM House h LEFT JOIN FETCH h.residentsList r WHERE r.uuid = :personUUID", House.class)
-                .setParameter("personUUID", person.getUuid())
-                .uniqueResult()));
+        persons.forEach(person -> person
+                .setHouse(session.createQuery("SELECT h FROM House h LEFT JOIN FETCH h.residentsList r WHERE r.uuid = :personUUID", House.class)
+                        .setParameter("personUUID", person.getUuid())
+                        .uniqueResult()));
         return persons;
     }
 

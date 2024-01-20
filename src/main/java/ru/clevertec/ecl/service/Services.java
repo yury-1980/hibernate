@@ -9,8 +9,6 @@ public interface Services<T, U> {
 
     U findByUUID(UUID uuid) throws Throwable;
 
-    UUID create(T t);
-
     void update(T t, UUID uuid);
 
     void delete(UUID uuid);

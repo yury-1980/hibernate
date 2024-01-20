@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.requestDTO.RequestHouseDTO;
 import ru.clevertec.ecl.dto.responseDTO.ResponseHouseDTO;
 import ru.clevertec.ecl.entity.House;
+import ru.clevertec.ecl.exeption.EntityNotFoundExeption;
 import ru.clevertec.ecl.mapper.HouseMapper;
 import ru.clevertec.ecl.repository.Repository;
 import ru.clevertec.ecl.service.HouseService;
@@ -33,7 +34,7 @@ public class HouseServiceimpl implements HouseService {
     public ResponseHouseDTO findByUUID(UUID uuid) throws Throwable {
         return repository.findByUUID(uuid)
                 .map(house -> mapper.toResponseHouseDTO((House) house))
-                .orElseThrow(null);// TODO: 14-01-2024: дописать.
+                .orElseThrow(() -> new EntityNotFoundExeption("Object not found", UUID.class));
     }
 
     @Override

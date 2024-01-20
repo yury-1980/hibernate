@@ -26,12 +26,12 @@ public class HouseController {
 
     @GetMapping
     public List<ResponseHouseDTO> getAllHouse(@RequestParam(defaultValue = "1") int pageNumber,
-                                              @RequestParam(defaultValue = "5") int pageSize) {
+                                              @RequestParam(defaultValue = "15") int pageSize) {
         return services.findByAll(pageNumber, pageSize);
     }
 
     @GetMapping("/{uuid}")
-    public ResponseHouseDTO getPerson(@PathVariable("uuid") UUID uuid) throws Throwable {
+    public ResponseHouseDTO getHouse(@PathVariable("uuid") UUID uuid) throws Throwable {
 
         return services.findByUUID(uuid);
     }

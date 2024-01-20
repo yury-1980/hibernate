@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "person")
+@EqualsAndHashCode(of = {"uuid", "passportNumber"})
 public class Person {
 
     @Id
@@ -69,13 +71,11 @@ public class Person {
     @Column(name = "update_date")
     private LocalDateTime updateDate;
 
-    // TODO: 11-01-2024: домов во владении
     @Builder.Default
     @ToString.Exclude
     @ManyToMany(mappedBy = "ownersList", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<House> houseList = new ArrayList<>();
 
-    // TODO: 11-01-2024: место жительства.
     @Builder.Default
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

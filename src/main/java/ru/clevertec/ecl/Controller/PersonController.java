@@ -25,8 +25,8 @@ public class PersonController {
     private PersonService services;
 
     @GetMapping
-    public List<ResponsePersonDTO> getAllHouse(@RequestParam(defaultValue = "1") int pageNumber,
-                                               @RequestParam(defaultValue = "5") int pageSize) {
+    public List<ResponsePersonDTO> getAllPerson(@RequestParam(defaultValue = "1") int pageNumber,
+                                               @RequestParam(defaultValue = "15") int pageSize) {
         return services.findByAll(pageNumber, pageSize);
     }
 
@@ -36,10 +36,10 @@ public class PersonController {
         return services.findByUUID(uuid);
     }
 
-    @PostMapping
-    public UUID addPerson(@RequestBody RequestPersonDTO requestPersonDTO) {
+    @PostMapping("/{uuid}")
+    public void addPerson(@RequestBody RequestPersonDTO requestPersonDTO, @PathVariable("uuid") UUID uuid) {
 
-        return services.create(requestPersonDTO);
+        services.create(requestPersonDTO, uuid);
     }
 
     @PutMapping("/{uuid}")

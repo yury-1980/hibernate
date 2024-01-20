@@ -48,7 +48,6 @@ dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     implementation 'org.liquibase:liquibase-core:4.23.1'
-//    liquibaseRuntime 'info.picocli:picocli:4.6.3'
     liquibaseRuntime 'org.liquibase:liquibase-core:4.23.1'
     liquibaseRuntime "org.postgresql:postgresql:${postgresqlVersion}"
 

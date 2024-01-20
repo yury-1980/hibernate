@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,9 +30,10 @@ import java.util.UUID;
 @Data
 @Entity
 @Builder
-@Table(name = "house")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "house")
+@EqualsAndHashCode(of = "uuid")
 public class House {
 
     @Id
@@ -62,7 +64,6 @@ public class House {
     @Column(name = "create_date")
     private LocalDateTime createDate;
 
-    // TODO: 11-01-2024: лист владельцев
     @Builder.Default
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -71,7 +72,6 @@ public class House {
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> ownersList = new ArrayList<>();
 
-    // TODO: 11-01-2024: лист проживающих
     @ToString.Exclude
     @Builder.Default
     @OneToMany(mappedBy = "house", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
